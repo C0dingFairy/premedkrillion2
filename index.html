@@ -1,0 +1,111 @@
+<html lang="en" style="--depth: 0;"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Krillion: Med Dive</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;display=swap">
+<style>
+:root{color-scheme:light;--sh:#6cc6e6;--dp:#04162b;--sky:#ffd9a8;--tx:#06324a;--mu:#3f7089;--card:rgba(255,255,255,.88);--ln:rgba(6,50,74,.2);--ac:#0b8fb5;--on:#fff;--depth:0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--sh:#0b3a5a;--dp:#010510;--sky:#3a2f5c;--tx:#e8f6fb;--mu:#8db6c8;--card:rgba(5,15,30,.82);--ln:rgba(140,210,240,.22);--ac:#3fd0f0;--on:#02131f}}
+:root[data-theme="dark"]{color-scheme:dark;--sh:#0b3a5a;--dp:#010510;--sky:#3a2f5c;--tx:#e8f6fb;--mu:#8db6c8;--card:rgba(5,15,30,.82);--ln:rgba(140,210,240,.22);--ac:#3fd0f0;--on:#02131f}
+*{box-sizing:border-box}html{min-height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100vh;color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:color-mix(in srgb,var(--dp) calc(var(--depth)*100%),var(--sh));background-attachment:fixed}
+#snow{position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(circle,rgba(255,255,255,.4) 1.5px,transparent 2px),radial-gradient(circle,rgba(255,255,255,.25) 1px,transparent 1.5px);background-size:90px 110px,50px 70px}
+#cr{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+#cr span{position:absolute;left:-10%;opacity:.5;animation:drift linear infinite}
+@keyframes drift{to{left:105%}}
+#surf{position:fixed;top:0;left:0;right:0;height:150px;background:linear-gradient(var(--sky),var(--sh));border-bottom:4px solid rgba(255,255,255,.6);pointer-events:none}
+#surf span{position:absolute;right:12%;bottom:-6px;font-size:40px;animation:rock 3s ease-in-out infinite}
+@keyframes rock{50%{transform:rotate(6deg) translateY(3px)}}
+.hud,h1,h3,button,.rar,.gain,.big{font-family:"Press Start 2P",ui-monospace,monospace}
+.hud{position:fixed;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:calc(10px + env(safe-area-inset-top,0px)) 14px 10px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.6);font-size:.6rem;background:linear-gradient(rgba(0,0,20,.35),transparent)}
+.hud b{font-size:1rem}
+.shw{position:fixed;top:62px;left:0;right:0;display:flex;justify-content:center;pointer-events:none;z-index:4}
+.sh{transition:transform .7s;filter:drop-shadow(0 4px 6px rgba(0,0,0,.35))}.sh svg{display:block;animation:bob 2.2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px) rotate(4deg)}}
+.sh.dive{transform:rotate(80deg)}.sh.dive svg{animation-duration:.5s}.sh.zzz{transform:rotate(-20deg)}
+main{position:relative;z-index:3;max-width:560px;margin:0 auto;padding:170px 16px 50px}
+.card{background:var(--card);backdrop-filter:blur(6px);border:2px solid var(--ln);border-radius:14px;padding:20px;margin-bottom:14px;box-shadow:0 4px 0 var(--ln)}
+h1{font-size:1.5rem;margin:4px 0 12px;text-align:center;color:var(--ac);line-height:1.3}
+h3{font-size:.62rem;letter-spacing:.1em;color:var(--mu);margin:0 0 10px}
+.q{font-size:1.6rem;font-weight:800;line-height:1.2;margin:8px 0}
+.mu{color:var(--mu)}.c{text-align:center}
+.track{height:10px;border-radius:99px;background:var(--ln);overflow:hidden}
+.fill{height:100%;background:var(--ac);width:100%;transition:width 1s linear}.fill.low{background:#ff5d73}
+input{font:inherit;font-size:1.15rem;width:100%;padding:14px;margin-top:14px;border-radius:10px;border:2px solid var(--ln);background:transparent;color:var(--tx)}
+input:focus{outline:none;border-color:var(--ac)}
+input.shake{animation:sk .3s}@keyframes sk{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+button{font-size:.7rem;width:100%;margin-top:12px;padding:15px;border:0;border-radius:10px;background:var(--ac);color:var(--on);cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.3)}
+button:active{transform:translateY(3px);box-shadow:none}button:disabled{opacity:.5}
+.msg{min-height:1.3em;margin-top:8px;font-size:.9rem;color:var(--mu)}
+.rar{text-align:center}.rar .e{font-size:2.6rem}.rar .n{font-size:.8rem;margin:8px 0;color:var(--ac)}.rar .p{letter-spacing:.3em;font-size:.9rem}
+.ans{font-size:1.6rem;font-weight:800;text-align:center;margin:10px 0 2px}
+.gain{font-size:1.3rem;text-align:center;margin:8px 0}
+.big{font-size:3rem;text-align:center;line-height:1.1}
+svg.ch{width:100%;height:auto;display:block;color:var(--tx)}
+ul{list-style:none;padding:0;margin:0}li{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--ln)}
+small{color:var(--mu)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style></head><body>
+<div id="snow" style="background-position: 0px 0px, 20px 0px;"></div><div id="cr"><span style="top:14.779429817666054%;font-size:25.397671307881595px;animation-duration:18.677540293079062s;animation-delay:-18.858318841365694s;">🐠</span><span style="top:32.433061638329924%;font-size:24.59182115673216px;animation-duration:20.94140993601838s;animation-delay:-8.8169120726665s;animation-direction:reverse">🐟</span><span style="top:51.750484408569896%;font-size:28.642684009435747px;animation-duration:24.678731444867992s;animation-delay:-7.074822482647349s;">🐢</span><span style="top:64.65447475935567%;font-size:31.979697761273588px;animation-duration:16.157918179481783s;animation-delay:-7.836809851428317s;animation-direction:reverse">🦀</span><span style="top:81.90292752916822%;font-size:29.525198543294877px;animation-duration:21.978566916660913s;animation-delay:-3.8758960218447935s;">🐬</span></div><div id="surf" style="transform: translateY(0px);"><span>⛵</span></div>
+<div class="hud"><span id="dv">KRILLION</span><b id="dm">-0 m</b><span id="zn">Sunlit</span></div>
+<div class="shw"><div class="sh" id="sh"><svg viewBox="0 0 16 12" width="84" height="63" shape-rendering="crispEdges"><g fill="#ff5d73"><rect x="6" y="2" width="4" height="1"></rect><rect x="4" y="3" width="8" height="1"></rect><rect x="3" y="4" width="9" height="2"></rect><rect x="3" y="6" width="8" height="1"></rect><rect x="4" y="7" width="6" height="1"></rect><rect x="5" y="8" width="4" height="1"></rect><rect x="1" y="7" width="3" height="1"></rect><rect x="0" y="8" width="3" height="1"></rect><rect x="1" y="9" width="3" height="1"></rect></g><g fill="#ff9eb0"><rect x="5" y="4" width="4" height="1"></rect><rect x="5" y="6" width="3" height="1"></rect><rect x="0" y="8" width="1" height="1"></rect><rect x="5" y="9" width="1" height="2"></rect><rect x="7" y="9" width="1" height="2"></rect><rect x="9" y="9" width="1" height="2"></rect><rect x="12" y="2" width="3" height="1"></rect><rect x="13" y="1" width="2" height="1"></rect><rect x="11" y="6" width="3" height="1"></rect></g><rect x="10" y="3" width="2" height="2" fill="#fff"></rect><rect x="11" y="4" width="1" height="1" fill="#1b1b2f"></rect></svg></div></div>
+<main id="app"><div class="card c"><h1>MED DIVE</h1><p>Seven prompts. <b>One answer each.</b> 25 seconds on the clock.</p><p class="mu">Obvious answers barely move the shrimp. Rare answers sink it deeper. Each dive starts where the last one ended. How far down can you go?</p><button id="st">Dive in</button></div></main>
+<script>
+const R=[
+{q:"Name a body system",a:[["Circulatory",5,"cardiovascular|heart system|blood system"],["Digestive",5,"gastrointestinal|gi|digestion"],["Nervous",5,"neurological|nerve system|central nervous"],["Respiratory",5,"breathing|pulmonary"],["Skeletal",5,"skeleton|bone system"],["Muscular",5,"muscle system|musculoskeletal"],["Immune",10,"immunity"],["Endocrine",10,"hormone system|hormonal"],["Reproductive",10,"reproduction"],["Urinary",15,"renal|excretory|urinary tract"],["Integumentary",20,"skin system|skin"],["Lymphatic",20,"lymph system|lymph"],["Special senses",40,"sensory|senses"],["Vestibular",50,"balance system"],["Limbic",60,""],["Enteric nervous",90,"enteric"],["Renin-angiotensin",90,"raas"],["Glymphatic",100,""],["Mononuclear phagocyte",100,"reticuloendothelial"]]},
+{q:"Name a body part above the waist and below the head",a:[["Chest",5,""],["Arm",5,"arms"],["Shoulder",5,"shoulders"],["Neck",5,""],["Heart",5,""],["Hand",5,"hands"],["Lungs",5,"lung"],["Stomach",10,""],["Back",10,""],["Elbow",10,""],["Rib",10,"ribs|ribcage|rib cage"],["Finger",10,"fingers|thumb"],["Wrist",10,""],["Abdomen",10,"belly|torso"],["Spine",15,"spinal cord|vertebrae"],["Throat",15,""],["Armpit",15,"axilla"],["Bicep",15,"biceps|tricep|triceps"],["Liver",20,""],["Kidney",20,"kidneys"],["Clavicle",20,"collarbone"],["Sternum",20,"breastbone"],["Esophagus",20,"oesophagus"],["Trachea",25,"windpipe"],["Diaphragm",25,""],["Larynx",30,"voice box"],["Scapula",30,"shoulder blade"],["Humerus",30,""],["Spleen",35,""],["Pancreas",35,""],["Nape",40,""],["Thyroid cartilage",70,"adam's apple|adams apple"],["Hyoid bone",75,"hyoid"],["Olecranon",75,""],["Acromion",75,""],["Xiphoid process",80,"xiphoid"],["Anatomical snuffbox",90,"snuffbox"],["Thenar eminence",90,"thenar"],["Suprasternal notch",100,"jugular notch"],["Pacinian corpuscle",100,"pacinian"]]},
+{q:"Name a surgical operation",a:[["Appendectomy",5,"appendix removal|appendix"],["Tonsillectomy",5,"tonsil removal|tonsils"],["C-section",5,"cesarean|caesarean|csection"],["Bypass surgery",10,"heart bypass|cabg|bypass"],["Rhinoplasty",10,"nose job"],["Hysterectomy",10,""],["LASIK",10,"lasik eye surgery"],["Knee replacement",10,""],["Hip replacement",10,""],["Heart transplant",10,"transplant"],["Wisdom teeth removal",10,"wisdom teeth"],["Cholecystectomy",15,"gallbladder removal"],["Hernia repair",15,"hernia"],["Mastectomy",15,""],["Vasectomy",15,""],["ACL reconstruction",20,"acl repair|acl"],["Lobotomy",25,""],["Tracheotomy",30,"tracheostomy"],["Craniotomy",40,""],["Blepharoplasty",40,"eyelid surgery"],["Laminectomy",60,""],["Whipple procedure",80,"whipple|pancreaticoduodenectomy"],["Nissen fundoplication",80,"fundoplication"],["Fenestration",90,""],["Commissurotomy",90,""],["Sistrunk procedure",100,"sistrunk"],["Kasai portoenterostomy",100,"kasai"],["Omentopexy",100,""],["Hemipelvectomy",100,""]]},
+{q:"Name a medical specialty",a:[["Cardiology",5,"cardiologist"],["Pediatrics",5,"paediatrics|pediatrician"],["Dermatology",5,"dermatologist"],["Surgery",5,"surgeon"],["Neurology",5,"neurologist"],["Oncology",10,""],["Psychiatry",10,""],["Radiology",10,""],["Orthopedics",10,"orthopaedics|ortho"],["OB/GYN",10,"obstetrics|gynecology|obgyn"],["Emergency medicine",10,"er"],["Family medicine",10,"general practice|primary care"],["Plastic surgery",10,""],["Anesthesiology",15,"anaesthesiology|anesthesia"],["Ophthalmology",15,""],["Urology",15,""],["Gastroenterology",15,"gi"],["Pathology",20,""],["Endocrinology",20,""],["Geriatrics",20,""],["Pulmonology",20,""],["ENT",20,"otolaryngology"],["Nephrology",25,""],["Hematology",25,""],["Immunology",25,"allergy"],["Infectious disease",25,""],["Rheumatology",30,""],["Neonatology",30,""],["Palliative care",30,"hospice"],["Physical medicine and rehabilitation",50,"physiatry|pm&r|rehab"],["Sleep medicine",50,""],["Forensic pathology",60,""],["Nuclear medicine",70,""],["Preventive medicine",70,"public health"],["Medical toxicology",80,"toxicology"],["Phlebology",90,""],["Aerospace medicine",90,""],["Undersea and hyperbaric medicine",100,"hyperbaric medicine|undersea medicine"]]},
+{q:"Name something you can measure about the human body",a:[["Height",5,""],["Weight",5,""],["Heart rate",5,"pulse"],["Blood pressure",5,""],["Temperature",5,"body temperature"],["BMI",10,"body mass index"],["Cholesterol",10,""],["Oxygen saturation",10,"oxygen level|oxygen|spo2"],["Blood sugar",10,"glucose|blood glucose"],["Waist size",10,"waist|waist circumference"],["Hearing",15,""],["ECG",15,"ekg|electrocardiogram"],["Respiratory rate",15,"breathing rate"],["Body fat",15,"body fat percentage"],["Lung capacity",20,""],["Visual acuity",20,"eyesight|vision"],["EEG",20,"brain waves"],["White blood cell count",20,"wbc"],["Bone density",20,""],["Hemoglobin",25,""],["A1c",40,"hba1c"],["VO2 max",40,""],["Hematocrit",50,""],["Creatinine",60,""],["GFR",60,"glomerular filtration rate"],["Vital capacity",70,""],["Ejection fraction",70,""],["Intraocular pressure",80,"iop"],["Nerve conduction velocity",85,"ncv"],["Two-point discrimination",90,""],["Ankle-brachial index",100,"abi"],["Galactose elimination capacity",100,""]]},
+{q:"Name a protein your body uses",a:[["Collagen",5,""],["Hemoglobin",5,"haemoglobin"],["Insulin",5,""],["Keratin",10,""],["Antibodies",10,"antibody|immunoglobulin"],["Actin",15,""],["Myosin",15,""],["Elastin",20,""],["Amylase",20,""],["Albumin",25,""],["Pepsin",25,""],["Fibrin",30,""],["Lipase",30,""],["Myoglobin",30,""],["Fibrinogen",40,""],["Thrombin",40,""],["Histone",50,"histones"],["Ferritin",55,""],["Tubulin",60,""],["p53",60,""],["Transferrin",60,""],["Dystrophin",70,""],["Titin",80,""],["Kinesin",80,""],["Aquaporin",85,""],["Fibronectin",85,""],["Dynein",85,""],["Ubiquitin",90,""],["Clathrin",100,""],["Hepcidin",100,""],["Spectrin",100,""],["Melanin (a pigment, not a protein)",2,"melanin"]]},
+{q:"Name a body part below the knee",a:[["Foot",5,"feet"],["Ankle",5,""],["Shin",5,""],["Calf",5,""],["Toe",5,"toes"],["Heel",5,""],["Tibia",10,"shin bone|shinbone"],["Achilles tendon",10,"achilles"],["Sole",10,"sole of foot"],["Fibula",15,""],["Arch",15,"foot arch"],["Ball of foot",15,""],["Toenail",15,"toenails"],["Metatarsals",30,"metatarsal"],["Phalanges",30,"phalanx"],["Gastrocnemius",35,""],["Tarsals",40,"tarsal"],["Plantar fascia",50,""],["Talus",55,"ankle bone"],["Calcaneus",60,"heel bone"],["Soleus",60,""],["Tibialis anterior",60,""],["Peroneal muscles",70,"peroneus|fibularis"],["Hallux",70,"big toe"],["Navicular bone",80,"navicular"],["Medial malleolus",80,""],["Lateral malleolus",80,""],["Sesamoid bones",80,"sesamoid"],["Cuboid bone",85,"cuboid"],["Cuneiform",85,"cuneiforms"],["Tarsal tunnel",90,""],["Sustentaculum tali",100,""],["Flexor hallucis longus",100,""],["Extensor digitorum brevis",100,""]]}
+];
+
+const T=25,G=10,MAXD=7000,$=document.getElementById("app"),root=document.documentElement,$i=id=>document.getElementById(id);
+let r=0,pts=0,cur=0,t=T,iv=null,log=[],phase="intro",zn="";
+const ZN=[[0,"Sunlit"],[200,"Twilight"],[1000,"Midnight"],[4000,"Abyssal"],[6000,"Hadal"]];
+const CR={Sunlit:"🐠🐟🐢🦀🐬",Twilight:"🐡🐟🦑🐠🪼",Midnight:"🦑🐙🐟🐡🪼",Abyssal:"🐙🦑🪼🐡🐟",Hadal:"🦑🪼🐙✨🐡"};
+const fmt=n=>Math.round(n).toLocaleString("en-US");
+const zone=d=>[...ZN].reverse().find(z=>d>=z[0])[1];
+const rar=p=>p>=100?["✨","One in a krillion",5]:p>=70?["🐡","Deep cut",4]:p>=30?["🐙","Rare",3]:p>=15?["🐟","Uncommon",2]:p>0?["🦐","Common",1]:["💤","No answer",0];
+const pips=n=>"●".repeat(n)+"○".repeat(5-n);
+const norm=s=>s.toLowerCase().replace(/[^a-z0-9]/g,"");
+function lev(a,b){const m=[...Array(b.length+1).keys()];for(let i=1;i<=a.length;i++){let p=m[0];m[0]=i;for(let j=1;j<=b.length;j++){const x=m[j];m[j]=Math.min(m[j]+1,m[j-1]+1,p+(a[i-1]==b[j-1]?0:1));p=x}}return m[b.length]}
+function find(inp){const n=norm(inp);if(n.length<2)return null;const A=R[r].a,ks=e=>[e[0],...e[2].split("|")].filter(Boolean).map(norm);
+ for(const e of A)for(const k of ks(e))if(n===k||n+"s"===k||n===k+"s")return e;
+ for(const e of A)for(const k of ks(e)){const tol=k.length>=9?2:k.length>=5?1:0;if(tol&&Math.abs(k.length-n.length)<=tol&&lev(n,k)<=tol)return e}
+ return null}
+function creatures(){const z=zone(cur);if(z===zn)return;zn=z;$i("cr").innerHTML=[...CR[z]].map((c,i)=>`<span style="top:${14+i*16+Math.random()*6}%;font-size:${22+Math.random()*14}px;animation-duration:${14+Math.random()*16}s;animation-delay:-${Math.random()*20}s;${i%2?"animation-direction:reverse":""}">${c}</span>`).join("")}
+function setScene(d){cur=d;root.style.setProperty("--depth",Math.min(1,d/MAXD));$i("snow").style.backgroundPosition=`0 ${-d*.6}px,20px ${-d*.3}px`;$i("surf").style.transform=`translateY(${-d*.6}px)`;$i("dm").textContent="-"+fmt(d)+" m";$i("zn").textContent=zone(d);creatures()}
+function animateTo(to,ms,cb){const from=cur,st=performance.now();(function f(n){const k=Math.min(1,(n-st)/ms),e=1-Math.pow(1-k,3);setScene(from+(to-from)*e);k<1?requestAnimationFrame(f):cb&&cb()})(st)}
+const sh=$i("sh");
+function intro(){phase="intro";$i("dv").textContent="KRILLION";setScene(0);$.innerHTML=`<div class="card c"><h1>MED DIVE</h1><p>Seven prompts. <b>One answer each.</b> ${T} seconds on the clock.</p><p class="mu">Obvious answers barely move the shrimp. Rare answers sink it deeper. Each dive starts where the last one ended. How far down can you go?</p><button id="st">Dive in</button></div>`;$i("st").onclick=()=>{r=0;pts=0;log=[];play()}}
+function play(){phase="play";t=T;sh.className="sh";$i("dv").textContent=`DIVE ${r+1}/${R.length}`;
+ $.innerHTML=`<div class="card"><div class="track"><div class="fill" id="f"></div></div><div class="mu" id="tn" style="text-align:right;margin-top:6px">${t}s</div><div class="q">${R[r].q}</div><div class="mu">One answer. The rarer, the deeper.</div><input id="in" autocomplete="off" autocapitalize="off" placeholder="Your answer"><div class="msg" id="msg"></div><button id="go">Lock it in</button></div>`;
+ const i=$i("in");i.focus();i.onkeydown=e=>{if(e.key==="Enter")submit()};$i("go").onclick=submit;
+ clearInterval(iv);iv=setInterval(()=>{t--;const f=$i("f");if(f){f.style.width=(t/T*100)+"%";f.className="fill"+(t<=7?" low":"")}$i("tn").textContent=t+"s";if(t<=0){clearInterval(iv);reveal(null)}},1000);
+ setTimeout(()=>{const f=$i("f");f&&(f.style.width=((T-1)/T*100)+"%")},30)}
+function submit(){if(phase!=="play")return;const i=$i("in"),v=i.value.trim();if(!v)return;const e=find(v);
+ if(!e){$i("msg").textContent="Not on the board. Try another answer.";i.classList.remove("shake");void i.offsetWidth;i.classList.add("shake");i.select();return}
+ clearInterval(iv);reveal(e)}
+function reveal(e){phase="reveal";const p=e?e[1]:0,A=R[r].a,pct=e?Math.round(A.filter(x=>x[1]<p).length/A.length*100):0,ra=rar(p),last=r==R.length-1;
+ pts+=p;log.push({q:R[r].q,a:e?e[0]:"No answer",p});
+ $.innerHTML=`<div class="card"><div class="rar"><div class="e">${ra[0]}</div><div class="n">${ra[1]}</div><div class="p">${pips(ra[2])}</div></div><div class="ans">${e?e[0]:"Out of time"}</div><div class="gain">${e?"+"+fmt(p*G)+" m":"The shrimp napped"}</div>${e?`<div class="mu c">Rarer than ${pct}% of answers on the board</div>`:""}<button id="nx" disabled>${last?"Surface for the report":"Next dive"}</button></div>`;
+ const done=()=>{sh.className="sh";$i("nx").disabled=false;$i("nx").onclick=()=>{if(last)fin();else{r++;play()}}};
+ if(e){sh.className="sh dive";animateTo(cur+p*G,1200+p*18,done)}else{sh.className="sh zzz";setTimeout(done,500)}}
+const erf=x=>{const s=Math.sign(x);x=Math.abs(x);const t=1/(1+.3275911*x);return s*(1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-.284496736)*t+.254829592)*t*Math.exp(-x*x))};
+function fin(){phase="final";$i("dv").textContent="DIVE COMPLETE";sh.className="sh";
+ const d=pts*G,pc=Math.round(50*(1+erf((pts-280)/120/Math.SQRT2))),rank=d>=5000?"Krillion":d>=3500?"Anglerfish":d>=2200?"Giant squid":d>=1200?"Tuna":"Plankton";
+ const X=v=>20+v/700*660,Y=m=>30+m/1000*190;let path="";for(let x=0;x<=700;x+=10)path+=(x?"L":"M")+X(x)+" "+(170-150*Math.exp(-Math.pow((x-280)/120,2)/2))+" ";
+ const mx=X(Math.min(pts,700)),area=`${path}L${X(700)} 170 L${X(0)} 170Z`;
+ const bell=`<svg class="ch" viewBox="0 0 700 200"><defs><clipPath id="cp"><rect x="0" y="0" width="${mx}" height="200"/></clipPath></defs><path d="${area}" fill="#3fd0f0" opacity=".18"/><path d="${area}" fill="#3fd0f0" opacity=".5" clip-path="url(#cp)"/><path d="${path}" fill="none" stroke="#3fd0f0" stroke-width="2"/><line x1="${mx}" y1="40" x2="${mx}" y2="170" stroke="#ff5d73" stroke-width="2"/><circle cx="${mx}" cy="40" r="4" fill="#ff5d73"/><text x="${mx}" y="30" text-anchor="middle" fill="#ff5d73" font-size="12" font-weight="700">YOU</text>${[0,100,200,300,400,500,600,700].map(v=>`<text x="${X(v)}" y="190" text-anchor="middle" font-size="10" fill="currentColor" opacity=".6">${v}</text>`).join("")}</svg>`;
+ const cols=log.map((x,i)=>{const cx=75+i*93,g=x.p*G;return `<line x1="${cx}" y1="${Y(0)}" x2="${cx}" y2="${Y(g)}" stroke="currentColor" opacity=".45" stroke-width="2"/><text x="${cx}" y="18" text-anchor="middle" font-size="11" fill="currentColor">${i+1}</text><text x="${cx}" y="${Y(g)+16}" text-anchor="middle" font-size="16">${rar(x.p)[0]}</text>`}).join("");
+ const grid=[0,250,500,750,1000].map(m=>`<line x1="40" x2="690" y1="${Y(m)}" y2="${Y(m)}" stroke="currentColor" stroke-dasharray="3 4" opacity=".25"/><text x="36" y="${Y(m)+3}" text-anchor="end" font-size="9" fill="currentColor" opacity=".7">-${m}m</text>`).join("");
+ const best=R.map((x,i)=>{const tp=[...x.a].sort((a,b)=>b[1]-a[1])[0],hit=log[i]&&log[i].a===tp[0];return `<li><span>${i+1}. ${tp[0]}<br><small>${x.q}</small></span><b>${hit?"✓ ":""}-${fmt(tp[1]*G)} m</b></li>`}).join("");
+ $.innerHTML=`<div class="card c"><h3>YOUR DIVE</h3><div class="big">${pts}</div><div class="gain" style="color:var(--ac)">-${fmt(d)} m</div><div class="rar"><div class="n">${rank}</div></div></div>
+ <div class="card"><h3>HOW YOU COMPARE</h3>${bell}<div class="mu c">Better than ${pc}% of typical dives (estimated)</div></div>
+ <div class="card"><h3>DIVE LOG · DEEPER = RARER</h3><svg class="ch" viewBox="0 0 700 250">${grid}${cols}</svg><ul style="margin-top:8px">${log.map((x,i)=>`<li><span>${i+1}. ${x.a}<br><small>${x.q} · ${rar(x.p)[1]}</small></span><b>+${fmt(x.p*G)} m</b></li>`).join("")}</ul></div>
+ <div class="card"><h3>DEEPEST ANSWERS OF THE DAY</h3><ul>${best}</ul></div><button id="again">Dive again</button>`;
+ $i("again").onclick=()=>{animateTo(0,1500,()=>{r=0;pts=0;log=[];intro()})};window.scrollTo(0,0)}
+intro();
+
+</script></body></html>
